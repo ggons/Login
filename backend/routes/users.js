@@ -1,3 +1,4 @@
+const auth = require('./../middleware/auth');
 const config = require('config');
 const express = require('express');
 const router = express.Router();
@@ -11,10 +12,8 @@ router.get('/', async (req, res) => {
   res.send(users);
 });
 
-router.get('/:email', async (req, res) => {
-  const user = await User.findOne({ email: req.params.email });
-  if (!user) return res.status(404).send('The user with the given Email was not found.');
-
+router.get('/me', auth, async (req, res) => {
+  const user = await User.findById(req.user._id).select('-password');
   res.send(user);
 });
 

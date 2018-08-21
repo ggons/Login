@@ -19,8 +19,6 @@ router.post('/', async (req, res) => {
   });
 });
 
-// Information Expert Principle
-
 function validate(user) {
   const schema = {
     email: Joi.string().required().email(),
