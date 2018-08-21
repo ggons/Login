@@ -1,0 +1,21 @@
+{
+  "name": "Login",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "config": "^2.0.1",
+    "express": "^4.16.3",
+    "joi": "^13.6.0",
+    "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.10",
+    "mongoose": "^5.2.9"
+  }
+}
