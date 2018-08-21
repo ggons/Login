@@ -1,4 +1,5 @@
 const auth = require('./../middleware/auth');
+const admin = require('./../middleware/admin');
 const config = require('config');
 const express = require('express');
 const router = express.Router();
@@ -8,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const { User, validate } = require('./../models/user');
 
 router.get('/', async (req, res) => {
+  throw new Error('Could not get the users.');
   const users = await User.find();
   res.send(users);
 });
@@ -40,7 +42,7 @@ router.put('/:email', async (req, res) => {
   if (!user) return res.status(404).send('The user with the given ID was not found.');
 });
 
-router.delete('/:email', async (req, res) => {
+router.delete('/:email', [auth, admin], async (req, res) => {
   const user = User.findByIdAndRemove(req.params.id);
   if (!user) return res.status(404).send('The user with the given ID was not found.');
 });
