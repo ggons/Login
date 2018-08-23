@@ -1,3 +1,7 @@
 {
-  "jwtPrivateKey": "asdfsadf"
+  "db": "localhost/login",
+  "jwtPrivateKey": "asdfsadf",
+  "cookieSeeionKey": ["asdfasf", "bxsvafa"],
+  "session": "zhkqhkjhfs",
+  "token": "zasdfsa"
 }

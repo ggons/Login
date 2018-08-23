@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Register</title>
+</head>
+<body>
+  <div id="register-pnl">
+    <h2>회원가입</h2>
+    <p>
+      <label>이메일: </label>
+      <input id="email" type="text" />
+    </p>
+    <p>
+      <label>이름: </label>
+      <input id="name" type="text" />
+    </p>
+    <p>
+      <label>비밀번호: </label>
+      <input id="password" type="password" />
+    </p>
+    <button id="register-btn" type="button">회원가입</button>
+  </div>
+  <div id="user-list-pnl">
+    <ol id="user-list">
+
+    </ol>
+    <button id="user-list-btn" type="button">유저 목록</button>
+  </div>
+  <div id="login-pnl">
+    <h2>로그인</h2>
+    <p>
+      <label>이메일: </label>
+      <input id="email" type="text" />
+    </p>
+    <p>
+      <label>비밀번호: </label>
+      <input id="password" type="password" />
+    </p>
+    <button id="login-btn" type="button">로그인</button>
+    <button id="tokenlogin-btn" type="button">토큰로그인</button>
+    <button id="logout-btn" type="button">로그아웃</button>
+  </div>
+
+  <script>
+    const registerPnl = document.getElementById('register-pnl');
+    const loginPnl = document.getElementById('login-pnl');
+    const userListPnl = document.getElementById('user-list-pnl');
+    const userList = document.getElementById('user-list');
+
+    registerPnl.querySelector('#register-btn').addEventListener('click', registerFn);
+    loginPnl.querySelector('#login-btn').addEventListener('click', loginFn);
+    loginPnl.querySelector('#logout-btn').addEventListener('click', logoutFn);
+    loginPnl.querySelector('#tokenlogin-btn').addEventListener('click', tokenLoginFn);
+    userListPnl.querySelector('#user-list-btn').addEventListener('click', userListFn);
+
+    function registerFn() {
+      const http = new XMLHttpRequest();
+      http.open('POST', '/api/users');
+      http.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+      http.onreadystatechange  = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
+          if (this.status === 200) {
+            console.log('success');
+            console.log(this.responseText);
+          } else {
+            console.log('fail : ' + this.status);
+            console.log(this.responseText);
+          }
+        }
+      }
+
+      let email = registeregisterPnl.querySelector('#email').value;
+      let name = registerPnl.querySelector('#name').value;
+      let password = registerPnl.querySelector('#password').value;
+
+      http.send(JSON.stringify({ email, name, password }));
+    }
+
+    function loginFn() {
+      const http = new XMLHttpRequest();
+      http.open('POST', '/api/auth');
+      http.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+      http.onreadystatechange  = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
+          if (this.status === 200) {
+            console.log('success');
+            console.log(this.responseText);
+          } else {
+            console.log('fail : ' + this.status);
+            console.log(this.responseText);
+          }
+        }
+      }
+
+      let email = loginPnl.querySelector('#email').value;
+      let password = loginPnl.querySelector('#password').value;
+
+      http.send(JSON.stringify({ email, password }));
+    }
+
+    function logoutFn() {
+      const http = new XMLHttpRequest();
+      http.open('POST', '/api/auth/logout');
+      http.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+      http.onreadystatechange  = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
+          if (this.status === 200) {
+            console.log('success');
+            console.log(this.responseText);
+          } else {
+            console.log('fail : ' + this.status);
+            console.log(this.responseText);
+          }
+        }
+      }
+
+      http.send();
+    }
+
+    function tokenLoginFn() {
+      const http = new XMLHttpRequest();
+      http.open('POST', '/api/auth/token');
+      http.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+      http.onreadystatechange  = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
+          if (this.status === 200) {
+            console.log('success');
+            console.log(this.responseText);
+          } else {
+            console.log('fail : ' + this.status);
+            console.log(this.responseText);
+          }
+        }
+      }
+
+      http.send();
+    }
+
+    function userListFn() {
+      const http = new XMLHttpRequest();
+      http.open('GET', '/api/users');
+      http.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+      http.onreadystatechange  = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
+          if (this.status === 200) {
+            console.log('success');
+            const users = JSON.parse(this.responseText);
+            
+            let str = users.reduce((a, user) => {
+              return a + `<li>${user.email}</li>`;
+            }, '');
+            userList.innerHTML = str;
+            
+          } else {
+            console.log('fail : ' + this.status);
+            console.log(this.responseText);
+          }
+        }
+      }
+
+      http.send();
+    }
+  </script>
+</body>
+</html>
